@@ -1,0 +1,51 @@
+##################################################################################
+#
+# TOMCAT配置
+#
+##################################################################################
+server:
+  port: 8088
+  tomcat:
+    uri-encoding: UTF-8
+  max-http-header-size: 80KB
+
+##################################################################################
+#
+# 配置数据源信息
+#
+##################################################################################
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource       # 数据源类型:HikariCP
+    driver-class-name: com.mysql.jdbc.Driver    # MySql驱动
+    url: jdbc:mysql://localhost:3306/foodie-shop?useUnicode=true?characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: zu3.141592653
+    hikari:
+      connection-timeout: 30000                   #等待连接池分配链接的最大时长
+      minimum-idle: 5                             #最小连接数
+      maximum-pool-size: 20                       #最大连接数
+      auto-commit: true                           #自动提交
+      idle-timeout: 600000
+      pool-name: DataSourceHikariCP
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+
+##################################################################################
+#
+# MYBATIS配置
+#
+##################################################################################
+mybatis:
+  type-aliases-package: edu.xpu.pojo              # 所有POJO类所在包路径
+  mapper-locations: classpath:mapper/*.xml        # mapper映射文件位置
+
+##################################################################################
+#
+# MyBatis 通用Mapper配置
+#
+##################################################################################
+mapper:
+  mappers: edu.xpu.hcp.my.mapper.MyMapper
+  not-empty: false
+  identity: MYSQL
