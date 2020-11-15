@@ -1,9 +1,4 @@
-package edu.xpu.hcp.mapper;
-
-import edu.xpu.hcp.my.mapper.MyMapper;
-import edu.xpu.hcp.pojo.Carousel;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
+package edu.xpu.hcp.enums;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -14,9 +9,25 @@ import org.springframework.stereotype.Component;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/15 20:42
+ * @date 2020/11/15 20:56
  * @version V1.0.1
+ * @Description 是否 枚举
  */
-@Component
-public interface CarouselMapper extends MyMapper<Carousel> {
+public enum YesOrNo {
+    /**
+     * 否
+     */
+    NO(0, "否"),
+    /**
+     * 是
+     */
+    YES(1, "是");
+
+    public final Integer type;
+    public final String value;
+
+    YesOrNo(Integer type, String value) {
+        this.type = type;
+        this.value = value;
+    }
 }

@@ -35,7 +35,7 @@ public class ServiceLogAspect {
         // do nothing
     }
 
-    @Around("pointcut()")
+    @Around("pointcutV2()")
     public Object recordTimeLog(ProceedingJoinPoint joinPoint)  throws Throwable{
         log.info("**********开始执行{}.{}**********",joinPoint.getTarget().getClass(),joinPoint.getSignature().getName());
         //开始时间

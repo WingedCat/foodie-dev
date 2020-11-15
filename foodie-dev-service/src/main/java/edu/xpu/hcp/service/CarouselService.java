@@ -1,9 +1,8 @@
-package edu.xpu.hcp.mapper;
+package edu.xpu.hcp.service;
 
-import edu.xpu.hcp.my.mapper.MyMapper;
 import edu.xpu.hcp.pojo.Carousel;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -14,9 +13,15 @@ import org.springframework.stereotype.Component;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/15 20:42
- * @version V1.0.1
+ * @date 2020/11/15 20:41
+ * @version v1.0.1
+ * @Description 轮播图Service
  */
-@Component
-public interface CarouselMapper extends MyMapper<Carousel> {
+public interface CarouselService {
+    /**
+     * 根据是否显示查询所有符合的轮播图
+     * @param isShow 是否展示
+     * @return List 所有符合规范的轮播图
+     */
+    List<Carousel> queryAll(Integer isShow);
 }
