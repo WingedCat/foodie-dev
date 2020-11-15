@@ -1,10 +1,9 @@
-package edu.xpu.hcp.controller;
+package edu.xpu.hcp.annotation;
 
-import edu.xpu.hcp.annotation.ServiceTimer;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -15,22 +14,11 @@ import springfox.documentation.annotations.ApiIgnore;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author: huchengpeng
- * @date: 2020/11/15 16:15
- * @description: 初始化项目后的测试
+ * @date: 2020/11/15 19:54
+ * @description: Service计时注解
  */
-@ApiIgnore
-@RestController
-@Slf4j
-public class HelloController {
-
-    @ServiceTimer
-    @GetMapping("/hello")
-    public String hello(){
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return "Hello foodie-dev";
-    }
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ServiceTimer {
+    String value() default "";
 }
