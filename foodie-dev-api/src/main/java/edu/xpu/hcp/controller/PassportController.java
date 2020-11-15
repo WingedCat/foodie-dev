@@ -104,6 +104,14 @@ public class PassportController {
         return JSONResult.ok(setNullProperty(user));
     }
 
+    @ApiOperation(value = "用户退出录",notes = "用户退出登录",httpMethod = "POST")
+    @PostMapping("/logout")
+    public JSONResult logout(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
+        //删除cookie
+        CookieUtils.deleteCookie(request,response,"user");
+        return JSONResult.ok();
+    }
+
     private User setNullProperty(User user){
         user.setPassword(null);
         user.setMobile(null);

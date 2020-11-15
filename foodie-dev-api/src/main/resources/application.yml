@@ -17,7 +17,7 @@ server:
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource       # 数据源类型:HikariCP
-    driver-class-name: com.mysql.jdbc.Driver    # MySql驱动
+    driver-class-name: com.mysql.jdbc.Driver       # MySql驱动
     url: jdbc:mysql://localhost:3306/foodie-shop?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
     username: root
     password: zu3.141592653
@@ -37,8 +37,8 @@ spring:
 #
 ##################################################################################
 mybatis:
-  type-aliases-package: edu.xpu.hcp.pojo              # 所有POJO类所在包路径
-  mapper-locations: classpath:mapper/*.xml        # mapper映射文件位置
+  type-aliases-package: edu.xpu.hcp.pojo           # 所有POJO类所在包路径
+  mapper-locations: classpath:mapper/*.xml         # mapper映射文件位置
 
 ##################################################################################
 #
