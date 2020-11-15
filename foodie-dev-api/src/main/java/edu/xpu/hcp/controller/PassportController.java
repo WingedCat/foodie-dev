@@ -54,7 +54,7 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册",notes = "用户注册",httpMethod = "POST")
     @PostMapping("/regist")
-    public JSONResult regist(@RequestBody UserBO userBO){
+    public JSONResult regist(@RequestBody UserBO userBO, HttpServletRequest request, HttpServletResponse response){
         String username = userBO.getUsername();
         String password = userBO.getPassword();
         String confirmPwd = userBO.getConfirmPassword();
@@ -79,7 +79,8 @@ public class PassportController {
             return JSONResult.errorMsg("两次密码输入不一致");
         }
         //5、实现注册
-        userService.createUser(userBO);
+        User user = userService.createUser(userBO);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(user),true);
         return JSONResult.ok();
     }
 

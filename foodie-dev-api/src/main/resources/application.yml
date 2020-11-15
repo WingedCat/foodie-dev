@@ -49,3 +49,13 @@ mapper:
   mappers: edu.xpu.hcp.my.mapper.MyMapper
   not-empty: false
   identity: MYSQL
+
+##################################################################################
+#
+# Log4j2 配置
+#
+##################################################################################
+logging:
+  config: classpath:log4j2.xml
+  level:
+    edu.xpu.hcp: trace
