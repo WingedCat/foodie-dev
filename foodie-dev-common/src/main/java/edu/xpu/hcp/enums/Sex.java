@@ -1,7 +1,4 @@
-package edu.xpu.hcp.service;
-
-import edu.xpu.hcp.pojo.Users;
-
+package edu.xpu.hcp.enums;
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
     | |__  _   _  ___| |__   ___ _ __   __ _ _ __   ___ _ __   __ _                --------------------
@@ -11,16 +8,29 @@ import edu.xpu.hcp.pojo.Users;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author: huchengpeng
- * @date: 2020/11/15 14:03
- * @description: 用户服务service
+ * @date: 2020/11/15 15:17
+ * @description: 性别枚举
  */
-public interface UsersService {
-
+public enum Sex {
     /**
-     * 查询是否存在此用户名
-     * @param username 待查询的用户名
-     * @return： true-存在此用户名，false-不存在此用户名
+     * 女性
      */
-    boolean queryUsernameIsExist(String username);
+    woman (0,"女"),
+    /**
+     * 男性
+     */
+    man(1,"男"),
+    /**
+     * 保密
+     */
+    secret(2,"保密");
 
+    public final Integer type;
+
+    public final String value;
+
+    Sex(Integer type,String value){
+        this.type = type;
+        this.value = value;
+    }
 }

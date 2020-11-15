@@ -3,7 +3,7 @@ package edu.xpu.hcp.pojo;
 import javax.persistence.*;
 import java.util.Date;
 
-public class Users {
+public class User {
     /**
      * 主键id 用户id
      */
