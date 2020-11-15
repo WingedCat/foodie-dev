@@ -2,12 +2,19 @@ package edu.xpu.hcp.controller;
 
 import edu.xpu.hcp.bo.UserBO;
 import edu.xpu.hcp.common.JSONResult;
+import edu.xpu.hcp.pojo.User;
 import edu.xpu.hcp.service.UserService;
+import edu.xpu.hcp.utils.CookieUtils;
+import edu.xpu.hcp.utils.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -76,6 +83,34 @@ public class PassportController {
         return JSONResult.ok();
     }
 
+    @ApiOperation(value = "用户登录",notes = "用户登录",httpMethod = "POST")
+    @PostMapping("/login")
+    public JSONResult login(@RequestBody UserBO userBO, HttpServletRequest request, HttpServletResponse response){
+        String username = userBO.getUsername();
+        String password = userBO.getPassword();
+
+        //1、判断用户名和密码不为空
+        if (StringUtils.isBlank(username) ||
+                StringUtils.isBlank(password)){
+            return JSONResult.errorMsg("用户名或密码不能为空");
+        }
+        //2、登录
+        User user = userService.queryUserForLogin(username, password);
+        if (user == null) {
+            return JSONResult.errorMsg("用户名或密码不正确");
+        }
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(user),true);
+        return JSONResult.ok(setNullProperty(user));
+    }
+
+    private User setNullProperty(User user){
+        user.setPassword(null);
+        user.setMobile(null);
+        user.setEmail(null);
+        user.setCreatedTime(null);
+        user.setUpdatedTime(null);
+        return user;
+    }
 
 
 

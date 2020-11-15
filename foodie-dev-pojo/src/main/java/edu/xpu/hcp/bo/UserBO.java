@@ -22,7 +22,7 @@ public class UserBO {
     private String username;
     @ApiModelProperty(value = "用户密码",name = "password",example = "123456.f",required = true)
     private String password;
-    @ApiModelProperty(value = "用户确认密码",name = "confirmPassword",example = "123456.f",required = true)
+    @ApiModelProperty(value = "用户确认密码",name = "confirmPassword",example = "123456.f",required = false)
     private String confirmPassword;
 
     public String getUsername() {
