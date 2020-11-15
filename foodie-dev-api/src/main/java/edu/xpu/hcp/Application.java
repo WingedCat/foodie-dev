@@ -1,4 +1,4 @@
-package edu.xpu;
+package edu.xpu.hcp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

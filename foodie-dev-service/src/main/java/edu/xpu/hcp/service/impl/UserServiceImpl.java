@@ -1,12 +1,12 @@
 package edu.xpu.hcp.service.impl;
 
-import edu.xpu.hcp.bo.UserBO;
 import edu.xpu.hcp.enums.Sex;
-import edu.xpu.hcp.mapper.UserMapper;
-import edu.xpu.hcp.pojo.User;
+import edu.xpu.hcp.bo.UserBO;
 import edu.xpu.hcp.service.UserService;
 import edu.xpu.hcp.utils.DateUtil;
 import edu.xpu.hcp.utils.MD5Utils;
+import edu.xpu.hcp.mapper.UserMapper;
+import edu.xpu.hcp.pojo.User;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
