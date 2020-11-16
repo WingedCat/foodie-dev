@@ -8,8 +8,10 @@ import edu.xpu.hcp.enums.CommentLevel;
 import edu.xpu.hcp.mapper.*;
 import edu.xpu.hcp.pojo.*;
 import edu.xpu.hcp.service.ItemService;
+import edu.xpu.hcp.utils.DesensitizationUtil;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemCommentVO;
+import edu.xpu.hcp.vo.SearchItemsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -121,6 +123,7 @@ public class ItemServiceImpl implements ItemService {
         //分页
         PageHelper.startPage(page,pageSize);
         List<ItemCommentVO> itemCommentVOS = itemsMapperCustom.queryItemsComments(map);
+        itemCommentVOS.forEach((item)-> item.setNickname(DesensitizationUtil.commonDisplay(item.getNickname())));
         PageInfo<ItemCommentVO> pageList = new PageInfo<>(itemCommentVOS);
         PagedGridResult grid = setPagedGrid(itemCommentVOS,page);
         return grid;
@@ -133,6 +136,19 @@ public class ItemServiceImpl implements ItemService {
         grid.setRows(list);
         grid.setTotal(pageList.getPages());
         grid.setRecords(pageList.getTotal());
+        return grid;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("keywords",keywords);
+        map.put("sort",sort);
+        //分页
+        PageHelper.startPage(page,pageSize);
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItems(map);
+        PagedGridResult grid = setPagedGrid(searchItemsVOS,page);
         return grid;
     }
 }

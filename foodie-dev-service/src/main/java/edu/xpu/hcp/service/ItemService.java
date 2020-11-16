@@ -54,7 +54,7 @@ public interface ItemService {
     /**
      * 根据商品ID查询商品的评价等级数量
      * @param itemId 商品ID
-     * @return
+     * @return CommentLevelCountsVO
      */
     CommentLevelCountsVO queryCommentsCounts(String itemId);
 
@@ -67,4 +67,14 @@ public interface ItemService {
      * @return List
      */
     PagedGridResult queryItemsComments(String itemId, Integer commentLevel, Integer page, Integer pageSize);
+
+    /**
+     * 搜索商品列表
+     * @param keywords 关键字
+     * @param sort 排序方式
+     * @param page 页码
+     * @param pageSize 页大小
+     * @return PageGridResult
+     */
+    PagedGridResult searchItems(String keywords,String sort,Integer page,Integer pageSize);
 }

@@ -92,4 +92,27 @@ public class ItemsController extends BaseController {
         PagedGridResult pagedGridResult = itemService.queryItemsComments(itemId, level, page, pageSize);
         return JSONResult.ok(pagedGridResult);
     }
+
+    @ApiOperation(value = "根据关键字查询商品",notes = "根据关键字查询商品",httpMethod = "GET")
+    @GetMapping("/search")
+    public JSONResult searchItems(@ApiParam(name="keywords",value = "关键字",required = true)
+                                  @RequestParam("keywords")String keywords,
+                                  @ApiParam(name="sort",value = "排序规则",required = true)
+                                  @RequestParam("sort")String sort,
+                                  @ApiParam(name="page",value = "页码",required = false)
+                                  @RequestParam("page")Integer page,
+                                  @ApiParam(name="pageSize",value = "页大小",required = false)
+                                  @RequestParam("pageSize")Integer pageSize){
+        if(StringUtils.isBlank(keywords)){
+            return JSONResult.errorMsg(null);
+        }
+        if(page == null){
+            page = PAGE_START;
+        }
+        if(pageSize == null){
+            pageSize = PAGE_SIZE;
+        }
+        PagedGridResult result = itemService.searchItems(keywords, sort, page, pageSize);
+        return JSONResult.ok(result);
+    }
 }

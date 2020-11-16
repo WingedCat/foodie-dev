@@ -1,14 +1,6 @@
-package edu.xpu.hcp.mapper;
+package edu.xpu.hcp.vo;
 
-import edu.xpu.hcp.my.mapper.MyMapper;
-import edu.xpu.hcp.pojo.Items;
-import edu.xpu.hcp.vo.ItemCommentVO;
-import edu.xpu.hcp.vo.SearchItemsVO;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
+import lombok.Data;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -19,25 +11,19 @@ import java.util.Map;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/16 16:01
+ * @date 2020/11/16 19:48
  * @version V1.0.1
- * @Description 自定义ItemsMapper
+ * @Description 用于展示搜索商品的VO
  */
-@Component
-public interface ItemsMapperCustom {
+@Data
+public class SearchItemsVO {
+    private String itemId;
 
-    /**
-     * 查询商品评论
-     * @param map 查询参数
-     * @return List
-     */
-    List<ItemCommentVO> queryItemsComments(@Param("paramsMap") Map<String,Object> map);
+    private String itemName;
 
-    /**
-     * 根据关键字查询商品
-     * @param map 查询参数
-     * @return List
-     */
-    List<SearchItemsVO> searchItems(@Param("paramsMap") Map<String,Object> map);
+    private Integer sellCounts;
 
+    private String imgUrl;
+    //以分为单位
+    private Integer price;
 }
