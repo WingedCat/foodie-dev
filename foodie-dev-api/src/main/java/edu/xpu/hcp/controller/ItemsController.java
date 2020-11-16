@@ -1,11 +1,13 @@
 package edu.xpu.hcp.controller;
 
 import edu.xpu.hcp.common.JSONResult;
+import edu.xpu.hcp.common.PagedGridResult;
 import edu.xpu.hcp.pojo.Items;
 import edu.xpu.hcp.pojo.ItemsImg;
 import edu.xpu.hcp.pojo.ItemsParam;
 import edu.xpu.hcp.pojo.ItemsSpec;
 import edu.xpu.hcp.service.ItemService;
+import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemInfoVo;
 import edu.xpu.hcp.vo.NewItemVO;
 import io.swagger.annotations.Api;
@@ -13,10 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
 @Api(value = "商品接口",tags = {"商品信息展示的相关接口"})
 @RestController
 @RequestMapping("items")
-public class ItemsController {
+public class ItemsController extends BaseController {
 
     @Autowired
     private ItemService itemService;
@@ -58,5 +57,39 @@ public class ItemsController {
         itemInfoVo.setItemSpecList(itemSpecs);
         itemInfoVo.setItemParams(itemsParam);
         return JSONResult.ok(itemInfoVo);
+    }
+
+    @ApiOperation(value = "查询商品评价数量",notes = "查询商品评价数量",httpMethod = "GET")
+    @GetMapping("/commentLevel")
+    public JSONResult getCommentLevel(@ApiParam(name="itemId",value = "商品ID",required = true)
+                                     @RequestParam("itemId")String itemId){
+        if(StringUtils.isBlank(itemId)){
+            return JSONResult.errorMsg("商品不存在");
+        }
+        CommentLevelCountsVO countsVO = itemService.queryCommentsCounts(itemId);
+        return JSONResult.ok(countsVO);
+    }
+
+    @ApiOperation(value = "查询商品评价",notes = "查询商品评价",httpMethod = "GET")
+    @GetMapping("/comments")
+    public JSONResult getComments(@ApiParam(name="itemId",value = "商品ID",required = true)
+                                      @RequestParam("itemId")String itemId,
+                                  @ApiParam(name="level",value = "评论等级",required = true)
+                                  @RequestParam("level")Integer level,
+                                  @ApiParam(name="page",value = "页码",required = false)
+                                      @RequestParam("page")Integer page,
+                                  @ApiParam(name="pageSize",value = "页大小",required = false)
+                                      @RequestParam("pageSize")Integer pageSize){
+        if(StringUtils.isBlank(itemId)){
+            return JSONResult.errorMsg("商品不存在");
+        }
+        if(page == null){
+            page = PAGE_START;
+        }
+        if(pageSize == null){
+            pageSize = PAGE_SIZE;
+        }
+        PagedGridResult pagedGridResult = itemService.queryItemsComments(itemId, level, page, pageSize);
+        return JSONResult.ok(pagedGridResult);
     }
 }

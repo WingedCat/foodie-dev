@@ -1,9 +1,10 @@
 package edu.xpu.hcp.service;
 
-import edu.xpu.hcp.pojo.Items;
-import edu.xpu.hcp.pojo.ItemsImg;
-import edu.xpu.hcp.pojo.ItemsParam;
-import edu.xpu.hcp.pojo.ItemsSpec;
+import edu.xpu.hcp.common.PagedGridResult;
+import edu.xpu.hcp.enums.CommentLevel;
+import edu.xpu.hcp.pojo.*;
+import edu.xpu.hcp.vo.CommentLevelCountsVO;
+import edu.xpu.hcp.vo.ItemCommentVO;
 
 import java.util.List;
 
@@ -49,4 +50,21 @@ public interface ItemService {
      * @return List
      */
     ItemsParam queryItemParamList(String itemId);
+
+    /**
+     * 根据商品ID查询商品的评价等级数量
+     * @param itemId 商品ID
+     * @return
+     */
+    CommentLevelCountsVO queryCommentsCounts(String itemId);
+
+    /**
+     * 根据商品ID和评价等级查询商品评价
+     * @param itemId 商品ID
+     * @param commentLevel 评价等级
+     * @param page 页码
+     * @param pageSize 大小
+     * @return List
+     */
+    PagedGridResult queryItemsComments(String itemId, Integer commentLevel, Integer page, Integer pageSize);
 }
