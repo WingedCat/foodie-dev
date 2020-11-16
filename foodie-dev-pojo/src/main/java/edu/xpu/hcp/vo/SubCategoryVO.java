@@ -1,8 +1,6 @@
-package edu.xpu.hcp.mapper;
+package edu.xpu.hcp.vo;
 
-import edu.xpu.hcp.my.mapper.MyMapper;
-import edu.xpu.hcp.pojo.Category;
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -13,9 +11,19 @@ import org.springframework.stereotype.Component;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/15 21:18
+ * @date 2020/11/15 21:43
  * @version V1.0.1
+ * @Description 三级分类
  */
-@Component
-public interface CategoryMapper extends MyMapper<Category> {
+@Data
+public class SubCategoryVO {
+
+    private Integer subId;
+
+    private String subName;
+
+    private String subType;
+
+    private Integer subFatherId;
+
 }

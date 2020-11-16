@@ -1,8 +1,10 @@
-package edu.xpu.hcp.mapper;
+package edu.xpu.hcp.service;
 
-import edu.xpu.hcp.my.mapper.MyMapper;
 import edu.xpu.hcp.pojo.Category;
-import org.springframework.stereotype.Component;
+import edu.xpu.hcp.vo.CategoryVO;
+import edu.xpu.hcp.vo.NewItemVO;
+
+import java.util.List;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -13,9 +15,30 @@ import org.springframework.stereotype.Component;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/15 21:18
+ * @date 2020/11/15 21:15
  * @version V1.0.1
+ * @Description 分类Service
  */
-@Component
-public interface CategoryMapper extends MyMapper<Category> {
+public interface CategoryService {
+
+    /**
+     * 查询所有一级分类
+     * @return List
+     */
+    List<Category> queryAllRootLevelCat();
+
+    /**
+     * 根据一级分类ID查询子分类信息
+     * @param rootCatId 一级分类ID
+     * @return List
+     */
+    List<CategoryVO> getSubCatList(Integer rootCatId);
+
+    /**
+     * 查询首页一级分类下的最新六条商品
+     * @param rootCatId 一级分类ID
+     * @return List
+     */
+    List<NewItemVO> getSixNewItemsLazy(Integer rootCatId);
+
 }
