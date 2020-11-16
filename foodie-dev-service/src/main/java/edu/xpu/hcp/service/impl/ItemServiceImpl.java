@@ -141,13 +141,25 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
-    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+    public PagedGridResult searchItemsByKeyWords(String keywords, String sort, Integer page, Integer pageSize) {
         Map<String,Object> map = new HashMap<>();
         map.put("keywords",keywords);
         map.put("sort",sort);
         //分页
         PageHelper.startPage(page,pageSize);
-        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItems(map);
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItemsByKeyWords(map);
+        PagedGridResult grid = setPagedGrid(searchItemsVOS,page);
+        return grid;
+    }
+
+    @Override
+    public PagedGridResult searchItemsByCatId(String catId, String sort, Integer page, Integer pageSize) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("catId",catId);
+        map.put("sort",sort);
+        //分页
+        PageHelper.startPage(page,pageSize);
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItemsByCatId(map);
         PagedGridResult grid = setPagedGrid(searchItemsVOS,page);
         return grid;
     }

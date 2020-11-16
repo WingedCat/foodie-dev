@@ -95,7 +95,7 @@ public class ItemsController extends BaseController {
 
     @ApiOperation(value = "根据关键字查询商品",notes = "根据关键字查询商品",httpMethod = "GET")
     @GetMapping("/search")
-    public JSONResult searchItems(@ApiParam(name="keywords",value = "关键字",required = true)
+    public JSONResult searchItemsByKeyWords(@ApiParam(name="keywords",value = "关键字",required = true)
                                   @RequestParam("keywords")String keywords,
                                   @ApiParam(name="sort",value = "排序规则",required = true)
                                   @RequestParam("sort")String sort,
@@ -112,7 +112,30 @@ public class ItemsController extends BaseController {
         if(pageSize == null){
             pageSize = PAGE_SIZE;
         }
-        PagedGridResult result = itemService.searchItems(keywords, sort, page, pageSize);
+        PagedGridResult result = itemService.searchItemsByKeyWords(keywords, sort, page, pageSize);
+        return JSONResult.ok(result);
+    }
+
+    @ApiOperation(value = "根据商品类别查询商品",notes = "根据商品类别查询商品",httpMethod = "GET")
+    @GetMapping("/catItems")
+    public JSONResult searchItemsByCatId(@ApiParam(name="catId",value = "商品类别ID",required = true)
+                                  @RequestParam("catId")String catId,
+                                  @ApiParam(name="sort",value = "排序规则",required = true)
+                                  @RequestParam("sort")String sort,
+                                  @ApiParam(name="page",value = "页码",required = false)
+                                  @RequestParam("page")Integer page,
+                                  @ApiParam(name="pageSize",value = "页大小",required = false)
+                                  @RequestParam("pageSize")Integer pageSize){
+        if(StringUtils.isBlank(catId)){
+            return JSONResult.errorMsg(null);
+        }
+        if(page == null){
+            page = PAGE_START;
+        }
+        if(pageSize == null){
+            pageSize = PAGE_SIZE;
+        }
+        PagedGridResult result = itemService.searchItemsByCatId(catId, sort, page, pageSize);
         return JSONResult.ok(result);
     }
 }

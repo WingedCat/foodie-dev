@@ -20,7 +20,7 @@
         </if>
   </select>
 
-    <select id="searchItems" parameterType="Map" resultType="edu.xpu.hcp.vo.SearchItemsVO">
+    <select id="searchItemsByKeyWords" parameterType="Map" resultType="edu.xpu.hcp.vo.SearchItemsVO">
         SELECT
             i.id as itemId,
             i.item_name as itemName,
@@ -42,6 +42,39 @@
         <if test=" paramsMap.keywords != null and paramsMap.keywords != '' ">
             AND i.item_name like "%"#{paramsMap.keywords}"%"
         </if>
+        ORDER BY
+        <choose>
+            <when test=" paramsMap.sort == &quot;c&quot;">
+                i.sell_counts DESC
+            </when>
+            <when test=" paramsMap.sort == &quot;p&quot;">
+                tempSpec.price ASC
+            </when>
+            <otherwise>
+                i.item_name ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="searchItemsByCatId" parameterType="Map" resultType="edu.xpu.hcp.vo.SearchItemsVO">
+        SELECT
+        i.id as itemId,
+        i.item_name as itemName,
+        i.sell_counts as sellCounts,
+        ii.url as imgUrl,
+        tempSpec.price as price
+        FROM
+        items i
+        LEFT JOIN items_img ii ON i.id = ii.item_id
+        LEFT JOIN
+        (
+        SELECT
+        item_id,MIN(price_discount) as price
+        FROM items_spec
+        GROUP BY item_id
+        ) tempSpec ON i.id = tempSpec.item_id
+        WHERE
+            ii.is_main = 1 AND i.cat_id = #{paramsMap.catId}
         ORDER BY
         <choose>
             <when test=" paramsMap.sort == &quot;c&quot;">
