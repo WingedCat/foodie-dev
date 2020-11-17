@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.List;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -38,6 +40,19 @@ public class ShopcatController {
         }
         System.out.println(shopcatBO);
         //TODO 前端用户在登录的情况下，添加商品到购物车，会同时在后端同步购物车到Redis
+        return JSONResult.ok();
+    }
+
+    @ApiOperation(value = "删除购物车商品",notes = "删除购物车商品",httpMethod = "POST")
+    @PostMapping("/del")
+    public JSONResult del(@RequestParam("userId")String userId, @RequestParam("itemSpecId") String itemSpecId,
+                          HttpServletRequest request, HttpServletResponse response){
+        if(StringUtils.isBlank(userId)){
+            return JSONResult.errorMsg("");
+        }
+        String[] ids = itemSpecId.split(",");
+        List<String> specIds = Arrays.asList(ids);
+        //TODO 用户在页面删除购物车中的商品数据，如果此时用户已经登录，则需要同步Redis中的数据
         return JSONResult.ok();
     }
 }
