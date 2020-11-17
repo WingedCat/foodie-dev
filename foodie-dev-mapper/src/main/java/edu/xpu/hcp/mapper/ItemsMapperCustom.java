@@ -55,4 +55,12 @@ public interface ItemsMapperCustom {
      */
     List<ShopcatVO> queryItemsBySpecIds(@Param("paramsList")List<String> spedIdList);
 
+    /**
+     * 更新库存
+     * @param specId 规格ID
+     * @param pendingCounts 扣除数量
+     * @return 更新数量
+     */
+    int decreaseItemSpecStock(@Param("specId")String specId,@Param("pendingCounts")Integer pendingCounts);
+
 }

@@ -67,6 +67,26 @@ public class AddressController {
         return JSONResult.ok();
     }
 
+    @ApiOperation(value = "删除收货地址",notes = "删除收货地址",httpMethod = "POST")
+    @PostMapping("/delete")
+    public JSONResult updateAddressByuserId(@RequestParam String userId,@RequestParam String addressId){
+        if(StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)){
+            return JSONResult.errorMsg("");
+        }
+        userAddressService.deleteUserAddress(userId,addressId);
+        return JSONResult.ok();
+    }
+
+    @ApiOperation(value = "设置默认地址",notes = "设置默认地址",httpMethod = "POST")
+    @PostMapping("/setDefault")
+    public JSONResult setDefaultAddr(@RequestParam String userId,@RequestParam String addressId){
+        if(StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)){
+            return JSONResult.errorMsg("");
+        }
+        userAddressService.setDefaultAddress(userId,addressId);
+        return JSONResult.ok();
+    }
+
     private JSONResult checkAddress(UserAddressBO userAddressBO){
         String receiver = userAddressBO.getReceiver();
         if(StringUtils.isBlank(receiver)){

@@ -38,4 +38,26 @@ public interface UserAddressService {
      * @param userAddressBO 地址BO
      */
     void updateUserAddress(UserAddressBO userAddressBO);
+
+    /**
+     * 根据用户ID和地址ID删除地址信息
+     * @param userId 用户ID
+     * @param addressId 地址ID
+     */
+    void deleteUserAddress(String userId,String addressId);
+
+    /**
+     * 根据用户ID和地址ID设置默认地址
+     * @param userId 用户ID
+     * @param addressId 地址ID
+     */
+    void setDefaultAddress(String userId,String addressId);
+
+    /**
+     * 根据用户ID和地址ID，查询用户具体地址对象信息
+     * @param userId 用户ID
+     * @param addressId 地址ID
+     * @return UserAddress
+     */
+    UserAddress queryUserAddress(String userId,String addressId);
 }

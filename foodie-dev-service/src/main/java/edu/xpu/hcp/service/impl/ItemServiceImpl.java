@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.xpu.hcp.common.PagedGridResult;
 import edu.xpu.hcp.enums.CommentLevel;
+import edu.xpu.hcp.enums.YesOrNo;
 import edu.xpu.hcp.mapper.*;
 import edu.xpu.hcp.pojo.*;
 import edu.xpu.hcp.service.ItemService;
@@ -170,5 +171,31 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ShopcatVO> queryItemsBySpecIds(List<String> spedIdList) {
         return itemsMapperCustom.queryItemsBySpecIds(spedIdList);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public ItemsSpec queryItemSpecById(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg img = new ItemsImg();
+        img.setId(itemId);
+        img.setIsMain(YesOrNo.YES.type);
+        ItemsImg itemsImg = itemsImgMapper.selectOne(img);
+        return itemsImg != null ? itemsImg.getUrl():"";
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    @Override
+    public void decreaseItemSpecStock(String specId, Integer buyCounts) {
+        //TODO 分布式锁减库存
+        int result = itemsMapperCustom.decreaseItemSpecStock(specId, buyCounts);
+        if(result != 1){
+            throw new RuntimeException("库存不够了...");
+        }
     }
 }

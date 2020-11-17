@@ -1,6 +1,7 @@
 package edu.xpu.hcp.service.impl;
 
 import edu.xpu.hcp.bo.UserAddressBO;
+import edu.xpu.hcp.enums.YesOrNo;
 import edu.xpu.hcp.mapper.UserAddressMapper;
 import edu.xpu.hcp.pojo.UserAddress;
 import edu.xpu.hcp.service.UserAddressService;
@@ -56,7 +57,7 @@ public class UserAddressServiceImpl implements UserAddressService {
         String addressId = sid.nextShort();
         UserAddress newAddress = new UserAddress();
         BeanUtils.copyProperties(userAddressBO,newAddress);
-        newAddress.setUserId(addressId);
+        newAddress.setId(addressId);
         newAddress.setIsDefault(isDefault);
         newAddress.setCreatedTime(new Date());
         newAddress.setUpdatedTime(new Date());
@@ -71,5 +72,44 @@ public class UserAddressServiceImpl implements UserAddressService {
         BeanUtils.copyProperties(userAddressBO,userAddress);
         userAddress.setId(addressId);
         userAddress.setUpdatedTime(new Date());
+        userAddressMapper.updateByPrimaryKeySelective(userAddress);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public void deleteUserAddress(String userId, String addressId) {
+        UserAddress userAddress = new UserAddress();
+        userAddress.setId(addressId);
+        userAddress.setUserId(userId);
+        userAddressMapper.delete(userAddress);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public void setDefaultAddress(String userId, String addressId) {
+        //1、查找默认地址，设置为不默认
+        UserAddress userAddress = new UserAddress();
+        userAddress.setUserId(userId);
+        userAddress.setIsDefault(YesOrNo.YES.type);
+        List<UserAddress> defaultAddr = userAddressMapper.select(userAddress);
+        defaultAddr.forEach((item)->{
+            item.setIsDefault(YesOrNo.NO.type);
+            userAddressMapper.updateByPrimaryKeySelective(item);
+        });
+        //2、根据地址ID修改为默认地址
+        UserAddress newDefaultAddr = new UserAddress();
+        newDefaultAddr.setId(addressId);
+        newDefaultAddr.setUserId(userId);
+        newDefaultAddr.setIsDefault(YesOrNo.YES.type);
+        userAddressMapper.updateByPrimaryKeySelective(newDefaultAddr);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public UserAddress queryUserAddress(String userId, String addressId) {
+        UserAddress userAddress = new UserAddress();
+        userAddress.setUserId(userId);
+        userAddress.setId(addressId);
+        return userAddressMapper.selectOne(userAddress);
     }
 }
