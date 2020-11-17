@@ -4,6 +4,7 @@ import edu.xpu.hcp.my.mapper.MyMapper;
 import edu.xpu.hcp.pojo.Items;
 import edu.xpu.hcp.vo.ItemCommentVO;
 import edu.xpu.hcp.vo.SearchItemsVO;
+import edu.xpu.hcp.vo.ShopcatVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +47,12 @@ public interface ItemsMapperCustom {
      * @return List
      */
     List<SearchItemsVO> searchItemsByCatId(@Param("paramsMap") Map<String,Object> map);
+
+    /**
+     * 根据商品ID列表查询商品信息
+     * @param spedIdList 商品VO
+     * @return List
+     */
+    List<ShopcatVO> queryItemsBySpecIds(@Param("paramsList")List<String> spedIdList);
 
 }

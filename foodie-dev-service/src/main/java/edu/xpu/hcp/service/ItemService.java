@@ -1,11 +1,9 @@
 package edu.xpu.hcp.service;
 
 import edu.xpu.hcp.common.PagedGridResult;
-import edu.xpu.hcp.enums.CommentLevel;
 import edu.xpu.hcp.pojo.*;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
-import edu.xpu.hcp.vo.ItemCommentVO;
-
+import edu.xpu.hcp.vo.ShopcatVO;
 import java.util.List;
 
 /**                                                                                ____________________
@@ -87,4 +85,12 @@ public interface ItemService {
      * @return PageGridResult
      */
     PagedGridResult searchItemsByCatId(String catId,String sort,Integer page,Integer pageSize);
+
+
+    /**
+     * 根据商品ID列表查询商品信息
+     * @param spedIdList 商品VO
+     * @return List
+     */
+    List<ShopcatVO> queryItemsBySpecIds(List<String> spedIdList);
 }

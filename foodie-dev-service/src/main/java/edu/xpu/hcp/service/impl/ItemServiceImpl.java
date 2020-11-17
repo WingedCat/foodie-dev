@@ -12,6 +12,7 @@ import edu.xpu.hcp.utils.DesensitizationUtil;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemCommentVO;
 import edu.xpu.hcp.vo.SearchItemsVO;
+import edu.xpu.hcp.vo.ShopcatVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -152,6 +153,7 @@ public class ItemServiceImpl implements ItemService {
         return grid;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public PagedGridResult searchItemsByCatId(String catId, String sort, Integer page, Integer pageSize) {
         Map<String,Object> map = new HashMap<>();
@@ -162,5 +164,11 @@ public class ItemServiceImpl implements ItemService {
         List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItemsByCatId(map);
         PagedGridResult grid = setPagedGrid(searchItemsVOS,page);
         return grid;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Override
+    public List<ShopcatVO> queryItemsBySpecIds(List<String> spedIdList) {
+        return itemsMapperCustom.queryItemsBySpecIds(spedIdList);
     }
 }

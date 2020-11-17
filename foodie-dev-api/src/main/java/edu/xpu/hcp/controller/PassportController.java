@@ -81,6 +81,8 @@ public class PassportController {
         //5、实现注册
         User user = userService.createUser(userBO);
         CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(user),true);
+        //TODO 生成用户token，存入Redis会话
+        //TODO 同步购物车数据到本机
         return JSONResult.ok();
     }
 
@@ -101,6 +103,9 @@ public class PassportController {
             return JSONResult.errorMsg("用户名或密码不正确");
         }
         CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(user),true);
+
+        //TODO 生成用户token，存入Redis会话
+        //TODO 同步购物车数据到本机
         return JSONResult.ok(setNullProperty(user));
     }
 

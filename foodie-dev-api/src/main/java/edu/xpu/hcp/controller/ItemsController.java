@@ -9,7 +9,7 @@ import edu.xpu.hcp.pojo.ItemsSpec;
 import edu.xpu.hcp.service.ItemService;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemInfoVo;
-import edu.xpu.hcp.vo.NewItemVO;
+import edu.xpu.hcp.vo.ShopcatVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**                                                                                ____________________
@@ -138,4 +139,18 @@ public class ItemsController extends BaseController {
         PagedGridResult result = itemService.searchItemsByCatId(catId, sort, page, pageSize);
         return JSONResult.ok(result);
     }
+
+    @ApiOperation(value = "刷新购物车商品",notes = "刷新购物车商品",httpMethod = "GET")
+    @GetMapping("/refresh")
+    public JSONResult refreshShopCartItem(@ApiParam(name="itemSpecIds",value = "购物车商品ID",required = true)
+                                         @RequestParam("itemSpecIds")String itemSpecIds){
+        if(StringUtils.isBlank(itemSpecIds)){
+            return JSONResult.errorMsg(null);
+        }
+        String[] ids = itemSpecIds.split(",");
+        List<String> specIdList = Arrays.asList(ids);
+        List<ShopcatVO> shopcatVOS = itemService.queryItemsBySpecIds(specIdList);
+        return JSONResult.ok(shopcatVOS);
+    }
+
 }

@@ -1,0 +1,43 @@
+package edu.xpu.hcp.controller;
+
+import edu.xpu.hcp.bo.ShopcatBO;
+import edu.xpu.hcp.common.JSONResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**                                                                                ____________________
+      _                _                                                           < 神兽护体，永无bug! >
+    | |__  _   _  ___| |__   ___ _ __   __ _ _ __   ___ _ __   __ _                --------------------
+   | '_ \| | | |/ __| '_ \ / _ \ '_ \ / _` | '_ \ / _ \ '_ \ / _` |                       \   ^__^
+  | | | | |_| | (__| | | |  __/ | | | (_| | |_) |  __/ | | | (_| |                        \  (oo)\_______
+ |_| |_|\__,_|\___|_| |_|\___|_| |_|\__, | .__/ \___|_| |_|\__, |                           (__)\       )\/\
+                                   |___/|_|                |___/                                ||----w |
+                                                                                                ||     ||
+ * @author huchengpeng
+ * @date 2020/11/16 21:16
+ * @version V1.0.1
+ * @Description 购物车相关
+ */
+@Api(value="购物车相关接口",tags = {"购物车相关接口"})
+@RestController
+@RequestMapping("shopcart")
+public class ShopcatController {
+
+    @ApiOperation(value = "加入购物车",notes = "加入购物车",httpMethod = "POST")
+    @PostMapping("/add")
+    public JSONResult add(@RequestParam("userId")String userId, @RequestBody ShopcatBO shopcatBO,
+                          HttpServletRequest request, HttpServletResponse response){
+        if(StringUtils.isBlank(userId)){
+            return JSONResult.errorMsg("");
+        }
+        System.out.println(shopcatBO);
+        //TODO 前端用户在登录的情况下，添加商品到购物车，会同时在后端同步购物车到Redis
+        return JSONResult.ok();
+    }
+}
