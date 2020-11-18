@@ -3,7 +3,7 @@ package edu.xpu.hcp.service;
 import edu.xpu.hcp.common.PagedGridResult;
 import edu.xpu.hcp.pojo.*;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
-import edu.xpu.hcp.vo.ShopcatVO;
+import edu.xpu.hcp.vo.ShopcartVO;
 import java.util.List;
 
 /**                                                                                ____________________
@@ -92,7 +92,7 @@ public interface ItemService {
      * @param spedIdList 商品VO
      * @return List
      */
-    List<ShopcatVO> queryItemsBySpecIds(List<String> spedIdList);
+    List<ShopcartVO> queryItemsBySpecIds(List<String> spedIdList);
 
     /**
      * 根据商品规格ID获取对象具体信息

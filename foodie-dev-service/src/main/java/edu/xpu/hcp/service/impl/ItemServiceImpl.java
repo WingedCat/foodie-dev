@@ -1,6 +1,5 @@
 package edu.xpu.hcp.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.xpu.hcp.common.PagedGridResult;
@@ -13,7 +12,7 @@ import edu.xpu.hcp.utils.DesensitizationUtil;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemCommentVO;
 import edu.xpu.hcp.vo.SearchItemsVO;
-import edu.xpu.hcp.vo.ShopcatVO;
+import edu.xpu.hcp.vo.ShopcartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -169,7 +168,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
-    public List<ShopcatVO> queryItemsBySpecIds(List<String> spedIdList) {
+    public List<ShopcartVO> queryItemsBySpecIds(List<String> spedIdList) {
         return itemsMapperCustom.queryItemsBySpecIds(spedIdList);
     }
 

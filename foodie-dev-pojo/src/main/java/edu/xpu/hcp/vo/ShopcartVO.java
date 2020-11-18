@@ -1,4 +1,4 @@
-package edu.xpu.hcp.bo;
+package edu.xpu.hcp.vo;
 
 import lombok.Data;
 import lombok.ToString;
@@ -14,11 +14,11 @@ import lombok.ToString;
  * @author huchengpeng
  * @date 2020/11/16 21:19
  * @version V1.0.1
- * @Description 购物车BO
+ * @Description 购物车VO
  */
 @Data
 @ToString
-public class ShopcatBO {
+public class ShopcartVO {
     private String itemImgUrl;
 
     private String itemId;
@@ -28,8 +28,6 @@ public class ShopcatBO {
     private String specId;
 
     private String specName;
-
-    private Integer buyCounts;
 
     private Integer priceDiscount;
 

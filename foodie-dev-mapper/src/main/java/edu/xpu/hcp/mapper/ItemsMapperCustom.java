@@ -1,10 +1,8 @@
 package edu.xpu.hcp.mapper;
 
-import edu.xpu.hcp.my.mapper.MyMapper;
-import edu.xpu.hcp.pojo.Items;
 import edu.xpu.hcp.vo.ItemCommentVO;
 import edu.xpu.hcp.vo.SearchItemsVO;
-import edu.xpu.hcp.vo.ShopcatVO;
+import edu.xpu.hcp.vo.ShopcartVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +51,7 @@ public interface ItemsMapperCustom {
      * @param spedIdList 商品VO
      * @return List
      */
-    List<ShopcatVO> queryItemsBySpecIds(@Param("paramsList")List<String> spedIdList);
+    List<ShopcartVO> queryItemsBySpecIds(@Param("paramsList")List<String> spedIdList);
 
     /**
      * 更新库存

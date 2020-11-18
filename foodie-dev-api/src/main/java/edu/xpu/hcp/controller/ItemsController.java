@@ -9,7 +9,7 @@ import edu.xpu.hcp.pojo.ItemsSpec;
 import edu.xpu.hcp.service.ItemService;
 import edu.xpu.hcp.vo.CommentLevelCountsVO;
 import edu.xpu.hcp.vo.ItemInfoVo;
-import edu.xpu.hcp.vo.ShopcatVO;
+import edu.xpu.hcp.vo.ShopcartVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -149,8 +149,8 @@ public class ItemsController extends BaseController {
         }
         String[] ids = itemSpecIds.split(",");
         List<String> specIdList = Arrays.asList(ids);
-        List<ShopcatVO> shopcatVOS = itemService.queryItemsBySpecIds(specIdList);
-        return JSONResult.ok(shopcatVOS);
+        List<ShopcartVO> shopcartVOS = itemService.queryItemsBySpecIds(specIdList);
+        return JSONResult.ok(shopcartVOS);
     }
 
 }

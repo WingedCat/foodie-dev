@@ -1,8 +1,9 @@
-package edu.xpu.hcp.service;
+package edu.xpu.hcp.config;
 
-import edu.xpu.hcp.bo.SubmitOrderBO;
-import edu.xpu.hcp.pojo.OrderStatus;
-import edu.xpu.hcp.vo.OrderVO;
+import edu.xpu.hcp.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 /**                                                                                ____________________
       _                _                                                           < 神兽护体，永无bug! >
@@ -13,35 +14,19 @@ import edu.xpu.hcp.vo.OrderVO;
                                    |___/|_|                |___/                                ||----w |
                                                                                                 ||     ||
  * @author huchengpeng
- * @date 2020/11/17 13:31
+ * @date 2020/11/18 10:42
  * @version V1.0.1
- * @Description 订单
+ * @Description 定时任务关闭超时订单
  */
-public interface OrderService {
+@Component
+public class OrderJob {
 
-    /**
-     * 创建订单
-     * @param submitOrderBO 订单BO
-     * @return OrderVO 订单VO
-     */
-    OrderVO createOrder(SubmitOrderBO submitOrderBO);
+    @Autowired
+    private OrderService orderService;
 
-    /**
-     * 修改订单状态
-     * @param orderId 订单ID
-     * @param orderStatus 订单状态
-     */
-    void updateOrderStatus(String orderId,Integer orderStatus);
-
-    /**
-     * 查询订单状态
-     * @param orderId 订单ID
-     * @return 订单状态
-     */
-    OrderStatus queryOrderStatus(String orderId);
-
-    /**
-     * 关闭超市未支付订单
-     */
-    void closeOrder();
+    @Scheduled(cron = "0/3 * * * * ?")
+//    @Scheduled(cron = "0 0 0/1 * * ?")
+    public void autoCloseOrder(){
+        orderService.closeOrder();
+    }
 }
