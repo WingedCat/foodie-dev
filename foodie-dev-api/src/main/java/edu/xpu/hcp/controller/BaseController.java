@@ -1,6 +1,10 @@
 package edu.xpu.hcp.controller;
 
 
+import edu.xpu.hcp.common.JSONResult;
+import edu.xpu.hcp.pojo.Orders;
+import edu.xpu.hcp.service.percenter.MyOrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -23,10 +27,24 @@ public class BaseController {
     String payReturnUrl = "http://nu9dn7.natappfree.cc/orders/notifyMerchantOrderPaid";
 
     // 用户上传头像的位置
-    public static final String IMAGE_USER_FACE_LOCATION = File.separator + "workspaces" +
+    public static final String IMAGE_USER_FACE_LOCATION = "D:"+File.separator+"JAVA"+File.separator+"mooc"+File.separator +
                                                             File.separator + "images" +
                                                             File.separator + "foodie" +
                                                             File.separator + "faces";
-    //public static final String IMAGE_USER_FACE_LOCATION = "/workspaces/images/foodie/faces";
+//    public static final String IMAGE_USER_FACE_LOCATION = "/workspaces/images/foodie/faces";
 
+    @Autowired
+    public MyOrdersService myOrdersService;
+
+    /**
+     * 用于验证用户和订单是否有关联关系，避免非法用户调用
+     * @return
+     */
+    public JSONResult checkUserOrder(String userId, String orderId) {
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (order == null) {
+            return JSONResult.errorMsg("订单不存在！");
+        }
+        return JSONResult.ok(order);
+    }
 }
