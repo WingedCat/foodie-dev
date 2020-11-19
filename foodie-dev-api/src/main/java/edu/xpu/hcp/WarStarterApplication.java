@@ -16,9 +16,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @version V1.0.1
  * @Description 打包war
  */
-public class WarStarterApplication extends SpringBootServletInitializer {
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(Application.class);
-    }
-}
+//public class WarStarterApplication extends SpringBootServletInitializer {
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        return builder.sources(Application.class);
+//    }
+//}
